@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Papy Mama</title>
+
+<style>
+:root {
+    --sun-size: clamp(80px, 16vw, 140px);
+    --earth-size: clamp(30px, 6vw, 55px);
+    --orbit-radius: clamp(120px, 30vw, 220px);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: black;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+main {
+    width: 100vw;
+    height: 100dvh;
+    position: relative;
+}
+
+/* ⭐ Stars */
+.stars {
+    position: absolute;
+    inset: 0;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+}
+
+/* ☀️ Sun */
+.sun {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    width: var(--sun-size);
+    height: var(--sun-size);
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, #fff3a0, #ff8c00);
+    border-radius: 50%;
+    box-shadow: 0 0 70px #ff8c00;
+}
+
+/* 🌍 Orbit */
+.orbit-center {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    width: 0;
+    height: 0;
+}
+
+.orbit-arm {
+    position: absolute;
+    width: var(--orbit-radius);
+    height: 0;
+    transform-origin: left center;
+    animation: orbit 8s linear infinite;
+}
+
+.earth {
+    width: var(--earth-size);
+    height: var(--earth-size);
+    border-radius: 50%;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg') center/cover no-repeat;
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: inset -10px 0 20px rgba(0,0,0,0.5);
+}
+
+@keyframes orbit {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ✨ Text */
+.text {
+    position: absolute;
+    top: 8%;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: clamp(16px, 4vw, 26px);
+    letter-spacing: 2px;
+    line-height: 1.5;
+    opacity: 0;
+    animation: fadeIn 3s 2s forwards;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* 🎉 Confetti */
+.confetti {
+    position: absolute;
+    width: 5px;
+    height: 8px;
+    top: -10px;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100dvh) rotate(360deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<main>
+
+<div class="stars" id="stars"></div>
+
+<div class="sun"></div>
+
+<div class="orbit-center">
+    <div class="orbit-arm">
+        <div class="earth"></div>
+    </div>
+</div>
+
+<div class="text">
+    HAPPY BIRTHDAY PAPY MAMA 🎉<br>
+    CHEERS TO ANOTHER TRIP AROUND THE SUN ☀️
+</div>
+
+</main>
+
+<script>
+(function () {
+
+    const starsContainer = document.getElementById("stars");
+
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < 200; i++) {
+        const s = document.createElement("div");
+        s.className = "star";
+        s.style.top = Math.random() * 100 + "%";
+        s.style.left = Math.random() * 100 + "%";
+        frag.appendChild(s);
+    }
+    starsContainer.appendChild(frag);
+
+    function createConfetti(count = 80) {
+        const frag = document.createDocumentFragment();
+        for (let i = 0; i < count; i++) {
+            const c = document.createElement("div");
+            c.className = "confetti";
+            c.style.left = Math.random() * 100 + "%";
+            c.style.background = `hsl(${Math.random()*360},100%,50%)`;
+            c.style.animationDuration = (Math.random()*2+2) + "s";
+            frag.appendChild(c);
+        }
+        document.body.appendChild(frag);
+    }
+
+    setTimeout(createConfetti, 3000);
+
+})();
+</script>
+
+</body>
+</html>
